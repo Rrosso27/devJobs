@@ -1,5 +1,7 @@
 <x-guest-layout>
-
+    <div>
+        <x-application-logo class="w-20 h-20 text-gray-500 fill-current" />
+    </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -33,14 +35,20 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
+        <div class="flex justify-between my-5">
+           <x-link :href="route('password.request')">
+            Olvidaste tu contraseña?
+           </x-link>
 
-            @endif
+           <x-link :href="route('register')">
+            Crear Cuenta
+           </x-link>
 
-            <x-primary-button class="ms-3 bg-lime-500">
-                {{ __('Log in') }}
-            </x-primary-button>
+
         </div>
+
+        <x-primary-button class="justify-center w-full">
+            {{ __('Iniciar Sesión') }}
+        </x-primary-button>
     </form>
 </x-guest-layout>
