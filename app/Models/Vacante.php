@@ -9,5 +9,28 @@ class Vacante extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'titulo',
+        'salario_id',
+        'categoria_id',
+        'user_id',
+        'publicado',
+        'empresa',
+        'ultimo_dia',
+        'descripcion',
+        'imagen',
+    ];
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 
+    public function salario()
+    {
+        return $this->belongsTo(Salario::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
