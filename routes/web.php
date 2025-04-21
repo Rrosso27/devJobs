@@ -23,6 +23,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [VacanteController::class, 'index'])->middleware(['auth'])->name('dashboard');
 Route::get('/vacantes/create', [VacanteController::class, 'create'])->middleware(['auth'])->name('vacantes.create');
 Route::get('/vacantes/{vacante}/edit', [VacanteController::class, 'edit'])->middleware(['auth'])->name('vacantes.edit');
+Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
+
 
 
 

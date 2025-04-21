@@ -10,7 +10,7 @@
                 class="h-64 p-6 overflow-y-auto bg-white border-b border-gray-200 md:flex md:justify-between md:items-center">
                 <div class="space-y-3">
                     <div class="leading-10">
-                        <a href="#" class="text-xl font-bold">
+                        <a href="{{route('vacantes.show', $vacante->id)}}" class="text-xl font-bold">
                             {{ $vacante->titulo }}
                         </a>
                         <p class="text-sm font-bold text-gray-600">{{ $vacante->empresa }}</p>
