@@ -35,5 +35,15 @@
                 vacantes</a>
         </div>
     @endguest
+    {{-- permite gestionar vacantes --}}
+    {{-- @can('create', App\Models\Vacante::class)
+        <p>Este es un reclutador</p>
+    @else
+        <p>No tienes permisos para ver esta sección.</p>
+    @endcan --}}
+
+    @cannot('create', App\Models\Vacante::class)
+        <livewire:postular-vacante :vacante="$vacante" />
+    @endcannot
 
 </div>
