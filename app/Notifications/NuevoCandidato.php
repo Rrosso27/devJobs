@@ -14,9 +14,11 @@ class NuevoCandidato extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($id_vacamte, $nombre_vacamte, $usuario_id)
     {
-        //
+        $this->id_vacamte = $id_vacamte;
+        $this->nombre_vacamte = $nombre_vacamte;
+        $this->usuario_id = $usuario_id;
     }
 
     /**
@@ -26,7 +28,7 @@ class NuevoCandidato extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -34,21 +36,20 @@ class NuevoCandidato extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $url = url('/candidatos/'.$this->id_vacamte);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('Has recibido una nueva postulación para la vacante: ')
+            ->line('La vacante es '. $this->nombre_vacamte)
+            ->action('Ver Candidatos', $url)
+            ->line('Gracias por tu interés.');
     }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
+    // Almacena la notificación en la base de datos
+    public function toDatabase($notifiable)
     {
         return [
-            //
+            'id_vacamte' => $this->id_vacamte,
+            'nombre_vacamte' => $this->nombre_vacamte,
+            'usuario_id' => $this->usuario_id,
         ];
     }
 }
