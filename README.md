@@ -33,4 +33,7 @@
   ~~~bash  
     php artisan db:seed 
   ~~~ 
- 
+  (6)Crea el enlace simbólico dentro del contenedor:
+    ~~~bash  
+        php artisan storage:link
+    ~~~ 
