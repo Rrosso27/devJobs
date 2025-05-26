@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Candidato;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Vacante;
 
 class CandidatoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function index(Vacante $vacante) {
+        // Obtener los candidatos de la vacante
+        $candidatos = Candidato::where('vacante_id', $vacante->id)->get();
+
+        // Retornar la vista con los candidatos
+        return view('candidatos.index', [
+            'vacante' => $vacante,
+            'candidatos' => $candidatos
+        ]);
     }
 
     /**

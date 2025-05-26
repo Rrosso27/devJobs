@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacanteController;
-
+use App\Http\Controllers\NotificacionController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CandidatoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,13 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::get('/dashboard', [VacanteController::class, 'index'])->middleware(['auth'])->name('dashboard');
-Route::get('/vacantes/create', [VacanteController::class, 'create'])->middleware(['auth'])->name('vacantes.create');
-Route::get('/vacantes/{vacante}/edit', [VacanteController::class, 'edit'])->middleware(['auth'])->name('vacantes.edit');
+Route::get('/dashboard', [VacanteController::class, 'index'])->middleware(['auth','rol.usuario'])->name('dashboard');
+Route::get('/vacantes/create', [VacanteController::class, 'create'])->middleware(['auth','rol.usuario'])->name('vacantes.create');
+Route::get('/vacantes/{vacante}/edit', [VacanteController::class, 'edit'])->middleware(['auth','rol.usuario'])->name('vacantes.edit');
 Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
 
+
+Route::get('/candidatos/{vacante}', [CandidatoController::class , 'index']  )->name('candidatos.index');
 
 
 
@@ -33,5 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/notificaciones', NotificacionController::class)->middleware(['auth','rol.usuario'])->name('notificaciones');
 
 require __DIR__.'/auth.php';

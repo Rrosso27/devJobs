@@ -12,14 +12,17 @@
 
                 <!-- Navigation Links -->
                 @auth
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Mis vacantes') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
-                            {{ __('Crear vacantes') }}
-                        </x-nav-link>
-                    </div>
+                    @if (auth()->user()->rol === 2)
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                                {{ __('Mis vacantes') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
+                                {{ __('Crear vacantes') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
+
                 @endauth
 
 
@@ -30,6 +33,13 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
 
                 @auth
+
+                    @if (auth()->user()->rol === 2)
+                        <a class="flex flex-col items-center justify-center mr-2 text-sm text-white bg-indigo-600 rounded-full w-7 h-7 hover:bg-indigo-800"
+                            href="{{ route('notificaciones') }}">
+                            {{ auth()->user()->unreadNotifications->count() }}
+                        </a>
+                    @endif
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
@@ -97,14 +107,28 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         @auth
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Mis vacantes') }}
-                </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
-                    {{ __('Crear vacantes') }}
-                </x-responsive-nav-link>
+
+
+            <div class="pt-2 pb-3 space-y-1">
+
+                @if (auth()->user()->rol === 2)
+                    <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Mis vacantes') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
+                        {{ __('Crear vacantes') }}
+                    </x-responsive-nav-link>
+
+                    <div class="flex items-center gap-2 p-3">
+                        <a class="flex flex-col items-center justify-center text-sm text-white bg-indigo-600 rounded-full w-7 h-7 hover:bg-indigo-800"
+                            href="{{ route('notificaciones') }}">
+                            {{ auth()->user()->unreadNotifications->count() }}
+                        </a>
+                        <p class="text-sm font-medium text-gray-500">Notificaciones</p>
+                    </div>
+                @endif
             </div>
 
             <!-- Responsive Settings Options -->
