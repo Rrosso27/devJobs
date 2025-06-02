@@ -5,6 +5,7 @@ use App\Http\Controllers\VacanteController;
 use App\Http\Controllers\NotificacionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CandidatoController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,9 +17,8 @@ use App\Http\Controllers\CandidatoController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('/dashboard', [VacanteController::class, 'index'])->middleware(['auth','rol.usuario'])->name('dashboard');
 Route::get('/vacantes/create', [VacanteController::class, 'create'])->middleware(['auth','rol.usuario'])->name('vacantes.create');
